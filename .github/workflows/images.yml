@@ -1,0 +1,34 @@
+name: images
+
+# Runs confidential-sglang's images workflow (.github/workflows/images.yml at
+# confidential-sglang main) for one confidential-sglang commit. It exists only
+# because GitHub Actions are disabled on confidential-sglang (a fork of
+# upstream sglang); once an admin enables them there, the same workflow runs
+# natively and this repository can be archived.
+
+on:
+  workflow_dispatch:
+    inputs:
+      source_commit:
+        description: confidential-sglang commit (40 hex)
+        required: true
+        type: string
+      publish:
+        description: Push both images and write the release after two matching builds
+        type: boolean
+        default: true
+
+permissions:
+  contents: read
+
+jobs:
+  images:
+    uses: confidential-dot-ai/confidential-sglang/.github/workflows/images.yml@main
+    permissions:
+      contents: write
+      packages: write
+    with:
+      source_commit: ${{ inputs.source_commit }}
+      publish: ${{ inputs.publish }}
+      release_repository: ${{ github.repository }}
+    secrets: inherit
