@@ -1,5 +1,0 @@
-name: probe
-on: workflow_dispatch
-jobs:
-  p:
-    uses: confidential-dot-ai/confidential-sglang/.github/workflows/probe.yml@sa/probe
